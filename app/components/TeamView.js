@@ -1,6 +1,20 @@
 var React = require('react');
 
 
+var teamStyles={
+  homeTeam: {
+    marginLeft: "20px",
+    fontSize: "30px"
+  },
+  awayTeam: {
+    marginLeft: "10px",
+    fontSize: "30px"
+  },
+  teamWrapper: {
+    marginTop: "50px"
+  }
+}
+
 function BatsmenDetail(props){
   return(
     <div>
@@ -17,10 +31,10 @@ function TeamView(props){
   return(
     <span>
     { props.home
-      ? <span onClick={props.handleClick}>
+      ? <span style={teamStyles.homeTeam} onClick={props.handleClick}>
           {props.home}
         </span>
-      : <span onClick={props.handleClick}>
+      : <span style={teamStyles.awayTeam}onClick={props.handleClick}>
           {props.away}
         </span>
     }
