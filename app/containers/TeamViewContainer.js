@@ -2,6 +2,12 @@ var React = require('react');
 var TeamView = require('../components/TeamView');
 var BatsmenDetail = require('../components/BatsmenDetail');
 
+var teamStyles={
+  teamWrapper:{
+    paddingTop : "50px"
+  }
+}
+
 var TeamViewContainer = React.createClass({
   getInitialState: function(){
     return{
@@ -35,7 +41,7 @@ var TeamViewContainer = React.createClass({
   },
   render: function(){
     return(
-      <div>
+      <div style={teamStyles.teamWrapper}>
         <span>
           <TeamView
             handleClick={this.handleHomeClick.bind(null,this.props.batsmen[0])}
@@ -44,7 +50,7 @@ var TeamViewContainer = React.createClass({
             showDetails={this.state.showDetails}
           />
         </span>
-        |
+
         <span>
           <TeamView
             handleClick={this.handleAwayClick.bind(null,this.props.batsmen[1])}
