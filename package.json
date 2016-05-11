@@ -1,0 +1,36 @@
+{
+  "name": "konradtest",
+  "version": "1.0.0",
+  "description": "\u001b[2~Create a simple MLB scoreboard that displays the team names and scores for each of the games on a given day.",
+  "main": "index.js",
+  "scripts": {
+    "production": "webpack -p",
+    "start": "webpack-dev-server"
+  },
+  "author": "Parth Desai",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer-loader": "^3.2.0",
+    "babel-core": "^6.8.0",
+    "babel-loader": "^6.2.4",
+    "babel-preset-react": "^6.5.0",
+    "css-loader": "^0.23.1",
+    "file-loader": "^0.8.5",
+    "html-webpack-plugin": "^2.16.1",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.0",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "axios": "^0.11.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "lodash": "^4.12.0",
+    "moment": "^2.13.0",
+    "moment-range": "^2.2.0",
+    "react": "^15.0.2",
+    "react-datepicker": "^0.27.0",
+    "react-dom": "^15.0.2",
+    "react-input-calendar": "^0.3.6",
+    "react-router": "^2.4.0"
+  }
+}
