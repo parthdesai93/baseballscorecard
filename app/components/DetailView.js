@@ -69,15 +69,6 @@ function TeamView(props){
   );
 }
 
-function CalendarView(props){
-  //<Calendar format='DD/MM/YYYY' date='4-12-2014' />
-  return(
-    <div>
-      Calendar
-    </div>
-  );
-}
-
 function DetailViewUI(props){
   return(
     <div>
@@ -107,9 +98,6 @@ function DetailViewUI(props){
         {
            <TeamViewContainer batsmen={props.box_score.data.boxscore.batting} away={props.box_score.data.boxscore.away_fname} home={props.box_score.data.boxscore.home_fname} />
         }
-      </div>
-      <div>
-        <CalendarView />
       </div>
     </div>
   );
