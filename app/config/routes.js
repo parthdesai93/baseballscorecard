@@ -12,8 +12,7 @@ var DetailViewContainer = require('../containers/DetailViewContainer')
 var routes = (
   <Router history={hashHistory}>
     <Route path="/" component={Main}>
-      <IndexRoute component={HomeContainer} />
-      <Route path="/game" component={GameContainer} />
+      <IndexRoute component={GameContainer} />
       <Route path="/detail" component={DetailViewContainer} />
     </Route>
   </Router>
