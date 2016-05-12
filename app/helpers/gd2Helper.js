@@ -10,10 +10,9 @@ var end_uri = '/master_scoreboard.json';
 
 var finished_uri = _baseURI + year + '/month_' + month + '/day_' + day + end_uri;
 var box_score_base_uri = 'http://gd2.mlb.com';
-var fav_team_name = "Blue Jays";
+var fav_team_default = "Blue Jays";
 
-function getScore(date){
-
+function getScore(date, fav_team){
   var day = date.date();
   var month = date.month()+1;
   var year = date.year();
@@ -26,28 +25,40 @@ function getScore(date){
                             : formatted_day = day;
 
   var finished_uri = _baseURI + year + '/month_' + formatted_month + '/day_' + formatted_day + end_uri;
-  console.log(finished_uri);
-  return getData(finished_uri);
+  return getData(finished_uri, fav_team);
 }
 
-function getData(uri){
+function getData(uri,fav_team){
+  if(fav_team === ""){
+    fav_team = fav_team_default;
+  }
   return axios.get(uri)
     .then(function (scoreData){
-      var sorted_data = sortFavTeam(scoreData);
+      var sorted_data = sortFavTeam(scoreData,fav_team);
       return sorted_data;
     });
 }
 
 
 
-function sortFavTeam(game_data){
+function sortFavTeam(game_data, fav_team_name){
   var team_found = _.findIndex(game_data.data.data.games.game,function(team){
     return team.home_team_name === fav_team_name || team.away_team_name === fav_team_name;
   });
   if(team_found !== -1){
     game_data.data.data.games.game.splice(0,0,game_data.data.data.games.game.splice(team_found,1)[0]);
   }
-  return game_data.data;
+  return game_data;
+}
+
+function sortFavTeam1(game_data, fav_team_name){
+  var team_found = _.findIndex(game_data.data.games.game,function(team){
+    return team.home_team_name === fav_team_name || team.away_team_name === fav_team_name;
+  });
+  if(team_found !== -1){
+    game_data.data.games.game.splice(0,0,game_data.data.games.game.splice(team_found,1)[0]);
+  }
+  return game_data;
 }
 
 function getBoxScore(game_data_directory){
@@ -60,5 +71,6 @@ function getBoxScore(game_data_directory){
 
 module.exports = {
   getScore : getScore,
-  getBoxScore: getBoxScore
+  getBoxScore: getBoxScore,
+  sortFavTeam: sortFavTeam1
 };
