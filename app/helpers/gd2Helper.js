@@ -43,7 +43,7 @@ function getData(uri,fav_team){
 
 function sortFavTeam(game_data, fav_team_name){
   var team_found = _.findIndex(game_data.data.data.games.game,function(team){
-    return team.home_team_name === fav_team_name || team.away_team_name === fav_team_name;
+    return team.home_team_name.toLowerCase() === fav_team_name.toLowerCase() || team.away_team_name.toLowerCase() === fav_team_name.toLowerCase();
   });
   if(team_found !== -1){
     game_data.data.data.games.game.splice(0,0,game_data.data.data.games.game.splice(team_found,1)[0]);
@@ -53,7 +53,7 @@ function sortFavTeam(game_data, fav_team_name){
 
 function sortFavTeam1(game_data, fav_team_name){
   var team_found = _.findIndex(game_data.data.games.game,function(team){
-    return team.home_team_name === fav_team_name || team.away_team_name === fav_team_name;
+    return team.home_team_name.toLowerCase() === fav_team_name.toLowerCase() || team.away_team_name.toLowerCase() === fav_team_name.toLowerCase();
   });
   if(team_found !== -1){
     game_data.data.games.game.splice(0,0,game_data.data.games.game.splice(team_found,1)[0]);
