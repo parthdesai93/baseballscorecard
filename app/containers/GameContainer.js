@@ -47,7 +47,7 @@ var GameContainer = React.createClass({
     this.makeRequest(this.state.date);
   },
   makeRequest: function(date) {
-   ScoreHelper.getScore(date)
+   ScoreHelper.getScore(date,this.state.favTeam)
       .then(function(info){
         this.setState({
           final_data: info.data,
@@ -74,17 +74,23 @@ var GameContainer = React.createClass({
       favTeam : e.target.value
     })
   },
+  handleSubmitFavTeam: function(){
+    this.setState({
+      final_data: ScoreHelper.sortFavTeam(this.state.final_data, this.state.favTeam)
+    })
+  },
   render: function() {
     return(
       <Game
         gameData={this.state.data}
-        finalData={this.state.final_data}
+        finalData={this.state.final_data.data}
         handleClick={this.handleClick}
         isLoading={this.state.isLoading}
         onChange={this.handleChange}
         day={this.state.date}
         onUpdateFavTeam={this.handleUpdateFavTeam}
-        favTeam={this.state.favTeam}/>
+        favTeam={this.state.favTeam}
+        onSubmitFav={this.handleSubmitFavTeam}/>
     );
   }
 });
