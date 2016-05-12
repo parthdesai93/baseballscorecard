@@ -1,4 +1,5 @@
 var React = require('react');
+var _ = require('lodash');
 
 
 var teamStyles={
@@ -12,29 +13,29 @@ var teamStyles={
   },
   teamWrapper: {
     marginTop: "50px"
+  },
+  active: {
+    color: "blue"
   }
 }
 
-function BatsmenDetail(props){
-  return(
-    <div>
-      {
-        props.showDetails.showHomeTeamDetails
-        ? <div>Batsmen</div>
-        : null
-      }
-    </div>
-  )
-}
-
 function TeamView(props){
+  props.showDetails.initialRender || props.showDetails.showHomeTeamDetails
+    ? homeStyle = _.merge({},teamStyles.homeTeam,teamStyles.active)
+    : homeStyle = teamStyles.homeTeam;
+
+  props.showDetails.showAwayTeamDetails
+    ? awayStyle =  _.merge({},teamStyles.awayTeam,teamStyles.active)
+    : awayStyle = teamStyles.awayTeam
+
   return(
     <span>
-    { props.home
-      ? <span style={teamStyles.homeTeam} onClick={props.handleClick}>
+    {
+      props.home
+      ? <button className="btn btn-default" style={homeStyle} onClick={props.handleClick}>
           {props.home}
-        </span>
-      : <span style={teamStyles.awayTeam}onClick={props.handleClick}>
+        </button>
+      : <span className="btn btn-default"style={awayStyle} onClick={props.handleClick}>
           {props.away}
         </span>
     }
