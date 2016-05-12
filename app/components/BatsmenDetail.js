@@ -2,31 +2,44 @@ var React = require('react');
 
 var BatsmenDetailStyles = {
   batsmenList: {
-    marginTop: "30px"
+    marginTop: "50px",
+    fontFamily: "'Roboto', sans-serif",
+    paddingBottom: "1px",
+    boxShadow: "1px 1px 1px 1px #AEAEAE",
+    marginBottom: "20px"
   },
   detailItem: {
-    marginLeft: "0px"
+    fontFamily: "'Roboto', sans-serif",
+    paddingBottom: "5px",
+    paddingTop: "5px"
+  },
+  detailItemWrapper: {
+    fontFamily: "'Roboto', sans-serif",
+    paddingBottom: "1px",
+    borderBottom: "1px solid #ebebeb",
+    width: "100%",
+    marginRight: "0px"
   }
 }
 
 
 function Batsmen (props){
   return(
-    <div className= "row" style={BatsmenDetailStyles.detailItem}>
-    <span className= "col-sm-2" style={BatsmenDetailStyles.detailItem}>  {props.batsmen.name_display_first_last} </span>
-    <span className= "col-sm-1" style={BatsmenDetailStyles.detailItem}> {props.batsmen.a} </span>
-    <span className= "col-sm-1" style={BatsmenDetailStyles.detailItem}>   {props.batsmen.h} </span>
-    <span className= "col-sm-1" style={BatsmenDetailStyles.detailItem}>   {props.batsmen.rbi} </span>
-    <span className= "col-sm-1" style={BatsmenDetailStyles.detailItem}>   {props.batsmen.bb}  </span>
-    <span className= "col-sm-1" style={BatsmenDetailStyles.detailItem}>   {props.batsmen.so}  </span>
-    <span className= "col-sm-1" style={BatsmenDetailStyles.detailItem}>   {props.batsmen.avg} </span>
+    <div className= "row" style={BatsmenDetailStyles.detailItemWrapper}>
+    <span className= "col-xs-2" style={BatsmenDetailStyles.detailItem}>  {props.batsmen.name_display_first_last} </span>
+    <span className= "col-xs-1 col-xs-offset-2" style={BatsmenDetailStyles.detailItem}> {props.batsmen.a} </span>
+    <span className= "col-xs-1" style={BatsmenDetailStyles.detailItem}>   {props.batsmen.h} </span>
+    <span className= "col-xs-1" style={BatsmenDetailStyles.detailItem}>   {props.batsmen.rbi} </span>
+    <span className= "col-xs-1" style={BatsmenDetailStyles.detailItem}>   {props.batsmen.bb}  </span>
+    <span className= "col-xs-1" style={BatsmenDetailStyles.detailItem}>   {props.batsmen.so}  </span>
+    <span className= "col-xs-1" style={BatsmenDetailStyles.detailItem}>   {props.batsmen.avg} </span>
     </div>
   )
 }
 
 function BatsmenDetail (props){
   return(
-    <div style={BatsmenDetailStyles.batsmenList}>
+    <div className="col-xs-8 col-xs-offset-1" style={BatsmenDetailStyles.batsmenList}>
       {
         props.batsmen.batter.map(function(info){
           return <Batsmen key={info.id} batsmen={info} />
