@@ -36,8 +36,6 @@ function getData(uri,fav_team){
   return axios.get(uri)
     .then(function (scoreData){
       var sorted_data = sortFavTeam(scoreData,fav_team);
-      console.log('getData');
-      console.log(_.isArray(sorted_data.data.data.games.game));
       return sorted_data;
     });
 }

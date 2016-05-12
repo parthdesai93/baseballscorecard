@@ -43,7 +43,8 @@ var GameContainer = React.createClass({
       isLoading: true,
       favTeam: "",
       date: moment(),
-      isGameArray: true
+      isGameArray: true,
+      isEmpty: false
     }
   },
   componentDidMount: function() {
@@ -52,14 +53,15 @@ var GameContainer = React.createClass({
   makeRequest: function(date) {
    ScoreHelper.getScore(date,this.state.favTeam)
       .then(function(info){
+        console.log(!_.has(info.data.data.games, 'game'));
         this.setState({
           final_data: info.data,
           isLoading: false,
-          isGameArray: _.isArray(info.data.data.games.game)
+          isGameArray: _.isArray(info.data.data.games.game),
+          isEmpty: !_.has(info.data.data.games, 'game')
         });
       }.bind(this));
 
-  //  console.log(_.isArray(this.state.final_data.data.games.game));
   },
   handleClick: function (data) {
     this.context.router.push({
@@ -97,7 +99,8 @@ var GameContainer = React.createClass({
         onUpdateFavTeam={this.handleUpdateFavTeam}
         favTeam={this.state.favTeam}
         onSubmitFav={this.handleSubmitFavTeam}
-        isGameArray={this.state.isGameArray}/>
+        isGameArray={this.state.isGameArray}
+        isEmpty={this.state.isEmpty} />
     );
   }
 });
