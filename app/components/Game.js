@@ -44,9 +44,9 @@ var GameStyles = {
 
 function FavFilter(props){
   return(
-    <div className="col-sm-12">
-      <form onSubmit={props.onSubmitFav}>
-        <div className="form-group">
+    <div className="col-sm-8">
+      <form className="form-inline"onSubmit={props.onSubmitFav}>
+        <div className="form-group" data-toggle="tooltip" data-placement="bottom" title="Please enter the name of the team without city name. E.g: For Toronto Blue Jays, just enter Blue Jays">
           <input
             className="form-control"
             placeholder = "Blue Jays"
@@ -54,13 +54,11 @@ function FavFilter(props){
             value= {props.favTeam}
             type="text" />
         </div>
-        <div className="form-group col-sm-4 col-sm-offset-4">
-          <button
-            className="btn btn-block btn-success"
-            type="submit" >
-              Submit
-          </button>
-        </div>
+        <button
+          className="btn btn-default"
+          type="submit" >
+            Save
+        </button>
       </form>
     </div>
   )
