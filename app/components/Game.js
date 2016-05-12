@@ -2,24 +2,42 @@ var React = require('react');
 var PropTypes = React.PropTypes;
 var DatePicker = require('react-datepicker');
 
+
+//    background-color: #eeeeee;
+// box-shadow: 1px 1px 1px 1px;
 var GameStyles = {
   homeTeam: {
     fontWeight : "bold",
     fontSize: "20px",
-    marginTop: "30px",
-    paddingLeft: "30%"
+    marginTop: "10px",
+    fontFamily: "'Roboto', sans-serif"
   },
   awayTeam: {
     fontSize:"20px",
     fontWeight: "lighter",
-    paddingLeft: "30%"
+    fontFamily: "'Roboto', sans-serif"
+
   },
   status:{
     fontSize:"15px",
-    paddingLeft: "30%"
+    fontFamily: "'Roboto', sans-serif"
+
   },
   score: {
-    float: 'right'
+    float: 'right',
+    fontFamily: "'Roboto', sans-serif"
+  },
+  gameWrapper: {
+    paddingBottom: "1px",
+    marginBottom: "30px",
+    boxShadow: "1px 1px 1px 1px #AEAEAE",
+    width: "50%"
+  },
+  gameItemWrapper: {
+    borderBottom: "1px solid #ebebeb",
+    paddingBottom:"5px",
+    cursor: "pointer",
+    paddingBottom: "10px"
   }
 
 }
@@ -41,8 +59,8 @@ function FavFilter(props){
 
 function GameItem(props){
   return(
-    <div className="row" onClick={props.handleClick}>
-      <div className="col-sm-4">
+    <div className="row" onClick={props.handleClick} style={GameStyles.gameItemWrapper}>
+      <div className="col-sm-4 col-sm-offset-4">
         <div style={GameStyles.homeTeam}>
           {props.data.home_team_name}
           {
@@ -71,7 +89,7 @@ function GameItem(props){
 function GameUI(props){
   // console.log(props.data.games.game.game_data_directory);
   return(
-    <div className="container ">
+    <div className="container " style={GameStyles.gameWrapper}>
       {props.data.games.game.map( function(info){
         return <GameItem key={info.id} data={info} handleClick={props.handleClick.bind(null,info)}/>
       })}
