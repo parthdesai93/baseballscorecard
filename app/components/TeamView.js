@@ -3,11 +3,11 @@ var React = require('react');
 
 var teamStyles={
   homeTeam: {
-    marginLeft: "20px",
+    marginLeft: "20%",
     fontSize: "30px"
   },
   awayTeam: {
-    marginLeft: "10px",
+    marginLeft: "50px",
     fontSize: "30px"
   },
   teamWrapper: {
