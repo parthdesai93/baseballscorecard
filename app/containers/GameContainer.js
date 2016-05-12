@@ -1,9 +1,11 @@
 var React = require('react');
 var DatePicker = require('react-datepicker');
 var moment = require('moment');
+var _ = require('lodash');
 require('react-datepicker/dist/react-datepicker.css');
 var Game = require('../components/Game');
 var ScoreHelper = require('../helpers/gd2Helper');
+
 var api_data = {
   "data" : {
     "games" : {
@@ -40,7 +42,8 @@ var GameContainer = React.createClass({
       final_data: {},
       isLoading: true,
       favTeam: "",
-      date: moment()
+      date: moment(),
+      isGameArray: true
     }
   },
   componentDidMount: function() {
@@ -51,9 +54,12 @@ var GameContainer = React.createClass({
       .then(function(info){
         this.setState({
           final_data: info.data,
-          isLoading: false
+          isLoading: false,
+          isGameArray: _.isArray(info.data.data.games.game)
         });
-      }.bind(this))
+      }.bind(this));
+
+  //  console.log(_.isArray(this.state.final_data.data.games.game));
   },
   handleClick: function (data) {
     this.context.router.push({
@@ -90,7 +96,8 @@ var GameContainer = React.createClass({
         day={this.state.date}
         onUpdateFavTeam={this.handleUpdateFavTeam}
         favTeam={this.state.favTeam}
-        onSubmitFav={this.handleSubmitFavTeam}/>
+        onSubmitFav={this.handleSubmitFavTeam}
+        isGameArray={this.state.isGameArray}/>
     );
   }
 });

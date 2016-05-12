@@ -25,6 +25,7 @@ function getScore(date, fav_team){
                             : formatted_day = day;
 
   var finished_uri = _baseURI + year + '/month_' + formatted_month + '/day_' + formatted_day + end_uri;
+  console.log(finished_uri);
   return getData(finished_uri, fav_team);
 }
 
@@ -35,6 +36,8 @@ function getData(uri,fav_team){
   return axios.get(uri)
     .then(function (scoreData){
       var sorted_data = sortFavTeam(scoreData,fav_team);
+      console.log('getData');
+      console.log(_.isArray(sorted_data.data.data.games.game));
       return sorted_data;
     });
 }

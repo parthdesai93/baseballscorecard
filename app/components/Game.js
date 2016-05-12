@@ -94,12 +94,18 @@ function GameItem(props){
 }
 
 function GameUI(props){
-  // console.log(props.data.games.game.game_data_directory);
   return(
     <div className="container " style={GameStyles.gameWrapper}>
-      {props.data.games.game.map( function(info){
-        return <GameItem key={info.id} data={info} handleClick={props.handleClick.bind(null,info)}/>
-      })}
+      {
+          props.isGameArray
+          ? props.data.games.game.map( function(info){
+            if(info.status.status.toLowerCase() === "final"){
+              return <GameItem key={info.id} data={info} handleClick={props.handleClick.bind(null,info)}/>
+            } else {
+              return <GameItem key={info.id} data={info} handleClick={null}/>
+            }})
+          :  <GameItem key={props.data.games.game.id} data={props.data.games.game} handleClick={props.handleClick.bind(null,props.data.games.game)} /> 
+      }
     </div>
   );
 }
@@ -115,7 +121,7 @@ function Game(props) {
                 onChange={props.onChange}
                 todayButton={'Today'} />
               <FavFilter onUpdateFavTeam={props.onUpdateFavTeam} favTeam={props.favTeam} onSubmitFav={props.onSubmitFav}/>
-              <GameUI data={props.finalData}  handleClick={props.handleClick}/>
+              <GameUI data={props.finalData}  handleClick={props.handleClick} isGameArray={props.isGameArray} />
             </div>
         }
       </div>
