@@ -44,8 +44,9 @@ var GameStyles = {
 
 function FavFilter(props){
   return(
-    <form onSubmit={props.onSubmitFav}>
-      <div className="form-group">
+    <div className="col-sm-12">
+      <form onSubmit={props.onSubmitFav}>
+        <div className="form-group">
           <input
             className="form-control"
             placeholder = "Blue Jays"
@@ -53,14 +54,22 @@ function FavFilter(props){
             value= {props.favTeam}
             type="text" />
         </div>
-    </form>
+        <div className="form-group col-sm-4 col-sm-offset-4">
+          <button
+            className="btn btn-block btn-success"
+            type="submit" >
+              Submit
+          </button>
+        </div>
+      </form>
+    </div>
   )
 }
 
 function GameItem(props){
   return(
     <div className="row" onClick={props.handleClick} style={GameStyles.gameItemWrapper}>
-      <div className="col-sm-4 col-sm-offset-4">
+      <div className="col-md-7 col-md-offset-2">
         <div style={GameStyles.homeTeam}>
           {props.data.home_team_name}
           {
@@ -107,7 +116,7 @@ function Game(props) {
               <DatePicker selected={props.day}
                 onChange={props.onChange}
                 todayButton={'Today'} />
-              <FavFilter onUpdateFavTeam={props.onUpdateFavTeam} favTeam={props.favTeam}/>
+              <FavFilter onUpdateFavTeam={props.onUpdateFavTeam} favTeam={props.favTeam} onSubmitFav={props.onSubmitFav}/>
               <GameUI data={props.finalData}  handleClick={props.handleClick}/>
             </div>
         }
