@@ -4,18 +4,19 @@ var _ = require('lodash');
 
 var teamStyles={
   homeTeam: {
-    marginLeft: "20%",
-    fontSize: "30px"
+
   },
   awayTeam: {
-    marginLeft: "50px",
-    fontSize: "30px"
+
   },
   teamWrapper: {
     marginTop: "50px"
   },
   active: {
-    color: "blue"
+    color: "#489CE4"
+  },
+  homeButtonWrapper: {
+    textAlign: "right"
   }
 }
 
@@ -32,12 +33,16 @@ function TeamView(props){
     <span>
     {
       props.home
-      ? <button className="btn btn-default" style={homeStyle} onClick={props.handleClick}>
-          {props.home}
-        </button>
-      : <span className="btn btn-default"style={awayStyle} onClick={props.handleClick}>
-          {props.away}
-        </span>
+      ? <div className="col-sm-offset-2 col-sm-3 col-xs-6 " style={teamStyles.homeButtonWrapper} >
+          <button className="btn btn-default" style={homeStyle} onClick={props.handleClick}>
+            {props.home}
+          </button>
+        </div>
+      : <div className="col-sm-3 col-xs-6" >
+          <button className="btn btn-default"style={awayStyle} onClick={props.handleClick}>
+            {props.away}
+          </button>
+        </div>
     }
     </span>
   );
