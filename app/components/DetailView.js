@@ -15,7 +15,7 @@ var DetailStyles= {
   homeTeam: {
     fontWeight: "bolder",
     fontSize: "20px",
-    marginTop: "30px"
+    marginTop: "10px"
   },
   awayTeam: {
     fontWeight: "lighter",
@@ -23,7 +23,7 @@ var DetailStyles= {
   },
   score:{
     paddingLeft: "10px",
-    width: "0px"
+    width: "0%"
   },
   teams:{
     fontSize: "20px",
@@ -32,11 +32,39 @@ var DetailStyles= {
   names:{
     fontSize: "20px",
     paddingLeft: "5%"
+  },
+  innings:{
+    fontSize: "15px",
+    paddingLeft: "10px",
+    width: "0%",
+    marginTop: "10px",
+  },
+  linescoreWrapper: {
+    textAlign: "right"
   }
 }
 
 
-
+function DisplayInning(props){
+  return(
+    props.inning === "1"
+    ? <span className="col-xs-1 col-xs-offset-3" style={DetailStyles.innings}>
+        {props.inning}
+      </span>
+    : props.inning === "9"
+      ? <span>
+          <span className="col-xs-1" style={DetailStyles.innings}>
+            {props.inning}
+          </span>
+          <span className="col-xs-1" style={DetailStyles.innings}>
+            R
+          </span>
+        </span>
+      : <span className="col-xs-1" style={DetailStyles.innings}>
+          {props.inning}
+        </span>
+  )
+}
 
 function LineScore(props){
   return(
@@ -52,23 +80,6 @@ function LineScore(props){
         : null
       }
     </span>
-
-  );
-}
-
-
-//ab, r , h , rbi, bb, so, avg
-function BatsmenView (props){
-  return(
-    <div style={DetailStyles.names}>
-      {props.batsmen.name_display_first_last}
-    </div>
-  );
-}
-
-function TeamView(props){
-  return(
-    <TeamViewContainer batsmen={props.batsmen} away={props.away} home={props.home}/>
   );
 }
 
@@ -76,30 +87,35 @@ function DetailViewUI(props){
   return(
     <div>
       <div className="row">
-        <div >
-          <span style={DetailStyles.homeTeam} >
-            <div className="col-xs-1 col-xs-offset-1">
+        {
+          props.box_score.data.boxscore.linescore.inning_line_score.map(function(value){
+            return <DisplayInning key={value.inning} inning={value.inning} />
+          })
+        }
+      </div>
+      <div className="row">
+        <div className="linescoreWrapper">
+          <div style={DetailStyles.homeTeam} >
+            <span className="col-xs-2 col-xs-offset-1" style={DetailStyles.linescoreWrapper}>
               {props.box_score.data.boxscore.home_team_code.toUpperCase()}
-            </div>
+            </span>
             {props.box_score.data.boxscore.linescore.inning_line_score.map(function(value){
               return <LineScore key={value.inning} score={value.home} inning={value.inning} runs={props.box_score.data.boxscore.linescore.home_team_runs}/>
             })}
             <br/>
-          </span>
-          <span style={DetailStyles.awayTeam} >
-            <div className="col-xs-1 col-xs-offset-1">
+          </div>
+          <div style={DetailStyles.awayTeam} >
+            <span className="col-xs-2 col-xs-offset-1" style={DetailStyles.linescoreWrapper}>
               {props.box_score.data.boxscore.away_team_code.toUpperCase()}
-            </div>
+            </span>
             {props.box_score.data.boxscore.linescore.inning_line_score.map(function(value){
               return <LineScore key={value.inning} score={value.away} inning={value.inning} runs={props.box_score.data.boxscore.linescore.away_team_runs}/>
             })}
-          </span>
+          </div>
         </div>
       </div>
       <div>
-        {
            <TeamViewContainer batsmen={props.box_score.data.boxscore.batting} away={props.box_score.data.boxscore.away_fname} home={props.box_score.data.boxscore.home_fname} />
-        }
       </div>
     </div>
   );
