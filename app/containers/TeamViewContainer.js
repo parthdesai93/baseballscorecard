@@ -41,25 +41,29 @@ var TeamViewContainer = React.createClass({
   },
   render: function(){
     return(
-      <div style={teamStyles.teamWrapper}>
-        <span>
-          <TeamView
-            handleClick={this.handleHomeClick.bind(null,this.props.batsmen[0])}
-            batsmen={this.props.batsmen[0]}
-            home={this.props.home}
-            showDetails={this.state.showDetails}
-          />
-        </span>
+      <div>
+        <div className="row" style={teamStyles.teamWrapper}>
+          <span>
+            <TeamView
+              handleClick={this.handleHomeClick.bind(null,this.props.batsmen[0])}
+              batsmen={this.props.batsmen[0]}
+              home={this.props.home}
+              showDetails={this.state.showDetails}
+            />
+          </span>
 
-        <span>
-          <TeamView
-            handleClick={this.handleAwayClick.bind(null,this.props.batsmen[1])}
-            batsmen={this.props.batsmen[1]}
-            away={this.props.away}
-            showDetails={this.state.showDetails}
-          />
-        </span>
-        <BatsmenDetail batsmen={this.state.batsmen} />
+          <span>
+            <TeamView
+              handleClick={this.handleAwayClick.bind(null,this.props.batsmen[1])}
+              batsmen={this.props.batsmen[1]}
+              away={this.props.away}
+              showDetails={this.state.showDetails}
+            />
+          </span>
+        </div>
+        <div className="row">
+          <BatsmenDetail batsmen={this.state.batsmen} />
+        </div>
       </div>
     );
   }
