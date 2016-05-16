@@ -25,7 +25,6 @@ function getScore(date, fav_team){
                             : formatted_day = day;
 
   var finished_uri = _baseURI + year + '/month_' + formatted_month + '/day_' + formatted_day + end_uri;
-  console.log(finished_uri);
   return getData(finished_uri, fav_team);
 }
 
@@ -52,7 +51,7 @@ function sortFavTeam(game_data, fav_team_name){
   return game_data;
 }
 
-function sortFavTeam1(game_data, fav_team_name){
+function sortFavTeamFromFiler(game_data, fav_team_name){
   var team_found = _.findIndex(game_data.data.games.game,function(team){
     return team.home_team_name.toLowerCase() === fav_team_name.toLowerCase() || team.away_team_name.toLowerCase() === fav_team_name.toLowerCase();
   });
@@ -70,8 +69,9 @@ function getBoxScore(game_data_directory){
     });
 }
 
+
 module.exports = {
   getScore : getScore,
   getBoxScore: getBoxScore,
-  sortFavTeam: sortFavTeam1
+  sortFavTeam: sortFavTeamFromFiler
 };
