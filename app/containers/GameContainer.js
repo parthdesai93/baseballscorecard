@@ -2,35 +2,12 @@ var React = require('react');
 var DatePicker = require('react-datepicker');
 var moment = require('moment');
 var _ = require('lodash');
+var Radium = require('radium');
 require('react-datepicker/dist/react-datepicker.css');
 var Game = require('../components/Game');
 var ScoreHelper = require('../helpers/gd2Helper');
 
-var api_data = {
-  "data" : {
-    "games" : {
-      "game" : [{
-        "home_team_name": "Team 1",
-        "away_team_name" : "Team 2",
-        "status": "final",
-        "detail" : "data`",
-        "id" : 1
-      },{
-        "home_team_name": "Team 3",
-        "away_team_name" : "Team 4",
-        "status": "final",
-        "detail" : "data2",
-        "id" : 2
-      },{
-        "home_team_name": "Team 5",
-        "away_team_name" : "Team 6",
-        "status": "final",
-        "detail" : "data3",
-        "id" : 3
-      }]
-    }
-  }
-};
+
 
 var GameContainer = React.createClass({
   contextTypes: {
@@ -38,7 +15,6 @@ var GameContainer = React.createClass({
   },
   getInitialState: function() {
     return {
-      data : api_data,
       final_data: {},
       isLoading: true,
       favTeam: "",
@@ -53,7 +29,6 @@ var GameContainer = React.createClass({
   makeRequest: function(date) {
    ScoreHelper.getScore(date,this.state.favTeam)
       .then(function(info){
-        console.log(!_.has(info.data.data.games, 'game'));
         this.setState({
           final_data: info.data,
           isLoading: false,
@@ -61,7 +36,6 @@ var GameContainer = React.createClass({
           isEmpty: !_.has(info.data.data.games, 'game')
         });
       }.bind(this));
-
   },
   handleClick: function (data) {
     this.context.router.push({
@@ -73,9 +47,13 @@ var GameContainer = React.createClass({
   },
   handleChange: function(date){
     this.setState({
-      date: date
+      date: date,
+      isLoading: true
     });
-    this.makeRequest(date);
+    setTimeout(function(){
+      this.makeRequest(this.state.date);
+    }.bind(this),100)
+
   },
   handleUpdateFavTeam: function(e){
     this.setState({
@@ -87,10 +65,25 @@ var GameContainer = React.createClass({
       final_data: ScoreHelper.sortFavTeam(this.state.final_data, this.state.favTeam)
     })
   },
+  handleNextDay: function(){
+    this.setState({
+      date: this.state.date.add(1,'day')
+    });
+    setTimeout(function() {
+      this.makeRequest(this.state.date)
+    }.bind(this),100);
+  },
+  handlePrevDay: function(){
+    this.setState({
+      date: this.state.date.subtract(1,'day')
+    });
+    setTimeout(function() {
+      this.makeRequest(this.state.date)
+    }.bind(this),100);
+  },
   render: function() {
     return(
       <Game
-        gameData={this.state.data}
         finalData={this.state.final_data.data}
         handleClick={this.handleClick}
         isLoading={this.state.isLoading}
@@ -100,7 +93,10 @@ var GameContainer = React.createClass({
         favTeam={this.state.favTeam}
         onSubmitFav={this.handleSubmitFavTeam}
         isGameArray={this.state.isGameArray}
-        isEmpty={this.state.isEmpty} />
+        isEmpty={this.state.isEmpty}
+        date={this.state.date}
+        onNextDay={this.handleNextDay}
+        onPrevDay={this.handlePrevDay}/>
     );
   }
 });
