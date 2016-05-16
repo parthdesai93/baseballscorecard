@@ -1,5 +1,5 @@
 var React = require('react');
-////ab, r , h , rbi, bb, so, avg
+
 var BatsmenDetailStyles = {
   batsmenList: {
     marginTop: "50px",
