@@ -33,7 +33,7 @@ function TeamView(props){
     <span>
     {
       props.home
-      ? <div className="col-sm-offset-2 col-sm-3 col-xs-6 " style={teamStyles.homeButtonWrapper} >
+      ? <div className="col-sm-offset-2 col-sm-3 col-xs-5 " style={teamStyles.homeButtonWrapper} >
           <button className="btn btn-default" style={homeStyle} onClick={props.handleClick}>
             {props.home}
           </button>
