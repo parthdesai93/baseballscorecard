@@ -2,10 +2,9 @@ var React = require('react');
 var PropTypes = React.PropTypes;
 var DatePicker = require('react-datepicker');
 var moment = require('moment');
+var radium = require('radium');
 
 
-//    background-color: #eeeeee;
-// box-shadow: 1px 1px 1px 1px;
 var GameStyles = {
   homeTeam: {
     fontSize: "20px",
@@ -62,33 +61,42 @@ var GameStyles = {
   },
   loser: {
     fontWeight: "lighter"
+  },
+  leftArrow: {
+    marginTop: "15px",
+    cursor: "pointer"
+  },
+  rightArrow: {
+    marginTop: "15px",
+    textAlign: "center",
+    cursor: "pointer"
   }
 }
 
 var month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
-function checkWinner(data){
-
-}
-
 function FavFilter(props){
   return(
-    <div className=" col-xs-4 col-sm-3 col-xs-offset-1" style={GameStyles.favFilterWrapper}>
+    <div className="col-xs-4 col-sm-3 col-xs-offset-4 col-sm-offset-4" style={GameStyles.favFilterWrapper}>
       <div className="pull-right">
-        <form className="form-inline"onSubmit={props.onSubmitFav}>
-          <div className="form-group" data-toggle="tooltip" data-placement="bottom" title="Please enter the name of the team without city name. E.g: For Toronto Blue Jays, just enter Blue Jays">
-            <input
-              className="form-control"
-              placeholder = "Blue Jays"
-              onChange={props.onUpdateFavTeam}
-              value= {props.favTeam}
-              type="text" />
+        <form className="form-inline" onSubmit={props.onSubmitFav}>
+          <div className="input-group">
+            <span className="form-group" data-toggle="tooltip" data-placement="bottom" title="Please enter the name of the team without city name. E.g: For Toronto Blue Jays, just enter Blue Jays">
+              <input
+                className="form-control"
+                placeholder = "Blue Jays"
+                onChange={props.onUpdateFavTeam}
+                value= {props.favTeam}
+                type="text" />
+            </span>
+            <span className="input-group-btn">
+              <button
+                className="btn btn-default"
+                type="submit" >
+                  Save
+              </button>
+            </span>
           </div>
-          <button
-            className="btn btn-default"
-            type="submit" >
-              Save
-          </button>
         </form>
       </div>
     </div>
@@ -98,8 +106,9 @@ function FavFilter(props){
 function GameItem(props){
   if(props.data.status.status === "Final"){
     props.data.linescore.r.home > props.data.linescore.r.away
-      ? home = _.merge({},GameStyles.homeTeam, GameStyles.winner)
+      ?  home = _.merge({},GameStyles.homeTeam, GameStyles.winner)
       : home = _.merge({},GameStyles.homeTeam, GameStyles.loser)
+
 
     props.data.linescore.r.away > props.data.linescore.r.home
       ? away = _.merge({},GameStyles.awayTeam, GameStyles.winner)
@@ -170,22 +179,6 @@ function GameUI(props){
       }
     </div>
   );
-  // return(
-  //   <div className="container " style={GameStyles.gameWrapper}>
-  //     {
-  //         props.isGameArray
-  //         ? props.data.games.game.map( function(info){
-  //           if(info.status.status.toLowerCase() === "final"){
-  //             return <GameItem key={info.id} data={info} handleClick={props.handleClick.bind(null,info)} isEmpty={props.isEmpty}/>
-  //           } else {
-  //             return <GameItem key={info.id} data={info} handleClick={null} isEmpty={props.isEmpty}/>
-  //           }})
-  //         : props.isEmpty === "true"
-  //           ?  <GameItem key={null} data={"Sorry, no games were found for this day"} isEmpty={props.isEmpty} />
-  //           : <GameItem key={props.data.games.game.id} data={props.data.games.game} handleClick={props.handleClick.bind(null,props.data.games.game)}  isEmpty={props.isEmpty}/>
-  //     }
-  //   </div>
-  // );
 }
 
 function Game(props) {
@@ -196,18 +189,26 @@ function Game(props) {
           ? <h1>Loading</h1>
           : <div className="container">
               <div className ="row">
-                <div className ="col-xs-3 col-sm-3 col-xs-offset-1 " style={GameStyles.datePickerWrapper}>
+                <div className ="col-xs-2 col-sm-3 col-xs-offset-1 " style={GameStyles.datePickerWrapper}>
                   <DatePicker selected={props.day}
                     onChange={props.onChange}
                     todayButton={'Today'}
                     className='form-control'
                     />
                 </div>
-                <div className="col-xs-3" style={GameStyles.dateWrapper}>
-                   {month[props.date.month()]} {props.date.date()}, {props.date.year()}
-                </div>
                 <FavFilter onUpdateFavTeam={props.onUpdateFavTeam} favTeam={props.favTeam} onSubmitFav={props.onSubmitFav}/>
               </div>
+              <div className="row">
+                <div className="col-xs-2 col-sm-1 col-xs-offset-2 col-sm-offset-4" style={GameStyles.leftArrow} onClick={props.onPrevDay}>
+                  <span className="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                </div>
+                <div className="col-xs-4 col-sm-2" style={GameStyles.dateWrapper}>
+                   {month[props.date.month()]} {props.date.date()}, {props.date.year()}
+                </div>
+                <div className="col-xs-3 col-sm-1" style={GameStyles.rightArrow} onClick={props.onNextDay}>
+                  <span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                </div>
+                </div>
               <div className="row">
                 <GameUI data={props.finalData}  handleClick={props.handleClick} isGameArray={props.isGameArray} isEmpty={props.isEmpty} isLoading={props.isLoading}/>
               </div>
